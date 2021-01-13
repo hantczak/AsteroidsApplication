@@ -7,7 +7,7 @@ public class Asteroid extends Character {
     private double rotationalMovement;
 
     public Asteroid(int x, int y) {
-        super(PolygonFactory.createPolygon(), x, y);
+        super(PolygonFactory.createPolygon(), x, y,1);
 
         Random rand = new Random();
 

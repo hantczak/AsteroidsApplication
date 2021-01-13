@@ -23,13 +23,14 @@ public class GameView {
 
 
 
-        Text text = new Text(10, 20, "Points: 0");
-        PointsCounter pointsCounter = new PointsCounter(text);
+        Text pointsLabel = new Text(10, 20, "Points: 0");
+        Text livesLeftLabel = new Text(10,20,"Lives left: " + );
+        PointsCounter pointsCounter = new PointsCounter(pointsLabel);
 
-        game.setupGameComponents(pointsCounter);
+        game.setupGameComponents(pointsCounter,4-MainMenuView.getChosenDifficultyLevel());
 
         gameView.getChildren().add(game.getGamePane());
-        gameView.getChildren().add(text);
+        gameView.setTop(pointsLabel);
 
     }
 
@@ -39,10 +40,6 @@ public class GameView {
     public static int getGameScreenHeight(){
         return gameScreenHeight;
     }
-
-
-
-
     public Scene getGameScene(){
         return gameScene;
     }

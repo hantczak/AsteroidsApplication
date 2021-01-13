@@ -9,11 +9,13 @@ public abstract class Character {
     private Polygon characterShape;
     private Point2D movement;
     private boolean alive;
+    private int livesLeft;
 
-    protected Character(Polygon polygon, int x, int y) {
+    protected Character(Polygon polygon, int x, int y, int livesLeft) {
         this.characterShape = polygon;
         this.characterShape.setTranslateX(x);
         this.characterShape.setTranslateY(y);
+        this.livesLeft = livesLeft;
 
         this.movement = new Point2D(0, 0);
     }
@@ -62,7 +64,7 @@ public abstract class Character {
         this.movement = this.movement.add(changeX, changeY);
     }
 
-    public void decelerate(){
+    public void decelerate() {
         double changeX = Math.cos(Math.toRadians(this.characterShape.getRotate()));
         double changeY = Math.sin(Math.toRadians(this.characterShape.getRotate()));
 
@@ -71,24 +73,36 @@ public abstract class Character {
 
         this.movement = this.movement.add(changeX, changeY);
     }
+
     public boolean collide(Character other) {
         Shape collisionArea = Shape.intersect(this.characterShape, other.getCharacterShape());
-        return collisionArea.getBoundsInLocal().getWidth()>0;
+        return collisionArea.getBoundsInLocal().getWidth() > 0;
     }
 
-    public Point2D getMovement(){
+    public Point2D getMovement() {
         return movement;
     }
 
-    public void setMovement(Point2D movement){
-        this.movement = this.movement.add(movement.getX(),movement.getY());
+    public void setMovement(Point2D movement) {
+        this.movement = this.movement.add(movement.getX(), movement.getY());
     }
 
-    public void setAlive(boolean ifAlive){
+    public void setAlive(boolean ifAlive) {
         this.alive = ifAlive;
     }
 
-    public boolean isAlive(){
-        return alive;
+    public boolean isAlive() {
+        return this.alive;
+    }
+
+    public void setLivesLeft(int number) {
+        this.livesLeft = number;
+        if (livesLeft == 0) {
+            setAlive(false);
+        }
+    }
+
+    public int getLivesLeft() {
+        return this.livesLeft;
     }
 }

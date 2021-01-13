@@ -13,7 +13,7 @@ public class GameMechanic {
     private Scene gameScene;
     private List<Character> asteroids;
     private List<Character> projectiles;
-    private Character ship;
+    private Ship ship;
     private PointsCounter pointsCounter;
 
     public GameMechanic(Scene scene) {
@@ -25,42 +25,49 @@ public class GameMechanic {
     }
 
 
-    public void setupGameComponents(PointsCounter pointsCounter) {
+    public void setupGameComponents(PointsCounter pointsCounter, int playerLives) {
         this.pointsCounter = pointsCounter;
 
         spawnInitialAsteroids();
 
-        ship = new Ship(GameView.getGameScreenWidth() / 2, GameView.getGameScreenHeight() / 2);
+        ship = new Ship(GameView.getGameScreenWidth() / 2, GameView.getGameScreenHeight() / 2, playerLives);
         asteroids.forEach(asteroid -> gamePane.getChildren().add(asteroid.getCharacterShape()));
         gamePane.getChildren().add(ship.getCharacterShape());
 
-        KeyboardUserInputController controller = new KeyboardUserInputController(gameScene,ship);
+        KeyboardUserInputController controller = new KeyboardUserInputController(gameScene, ship);
         controller.readKeyboardInput();
         startGame(controller);
 
     }
 
     public void startGame(KeyboardUserInputController controller) {
+        Timer timer = new Timer();
         new AnimationTimer() {
             public void handle(long now) {
                 controller.checkForInput();
 
-                if(controller.isShooting()){
+                if (controller.isShooting()) {
                     shoot();
                 }
 
                 ensureCharactersMovement();
 
-                if(checkForShipCollision()){
-                    stop();
+                if (checkForShipCollision()) {
+                    if (!ship.isAlive()) {
+                        stop();
+                        System.out.println("End!");
+                    } else if (ship.isAlive()) {
+                        ship.decreaseLives();
+                        int livesLeft = ship.getLivesLeft();
+                        clearScreen();
+                        restartGame(livesLeft);
+                    }
                 }
 
                 checkForProjectileCollision();
-
                 deleteDeadCharacters(projectiles);
                 deleteDeadCharacters(asteroids);
                 spawnAdditionalAsteroid();
-
             }
         }.start();
     }
@@ -78,7 +85,7 @@ public class GameMechanic {
 
 
     public void spawnAdditionalAsteroid() {
-        if (Math.random() < 0.005*MainMenuView.getChosenDifficultyLevel()) {
+        if (Math.random() < 0.005 * MainMenuView.getChosenDifficultyLevel()*0.5) {
             Random rand = new Random();
             Asteroid asteroid = new Asteroid(rand.nextInt(GameView.getGameScreenWidth()), rand.nextInt(GameView.getGameScreenHeight()));
             if (!asteroid.collide(ship)) {
@@ -110,7 +117,7 @@ public class GameMechanic {
         projectiles.forEach(Character::move);
     }
 
-    public boolean checkForShipCollision(){
+    public boolean checkForShipCollision() {
         AtomicBoolean ifTrue = new AtomicBoolean(false);
         asteroids.forEach(asteroid -> {
             if (asteroid.collide(ship)) {
@@ -120,7 +127,7 @@ public class GameMechanic {
         return ifTrue.get();
     }
 
-    public void checkForProjectileCollision(){
+    public void checkForProjectileCollision() {
         projectiles.forEach(projectile -> {
             asteroids.forEach(asteroid -> {
                 if (projectile.collide(asteroid)) {
@@ -146,5 +153,19 @@ public class GameMechanic {
 
     public Pane getGamePane() {
         return gamePane;
+    }
+
+    public void restartGame(int livesLeft) {
+        setupGameComponents(pointsCounter, livesLeft);
+    }
+
+    public void clearScreen() {
+        asteroids.forEach(asteroid -> asteroid.setAlive(false));
+        projectiles.forEach(projectile -> projectile.setAlive(false));
+        ship.setAlive(false);
+
+        deleteDeadCharacters(asteroids);
+        deleteDeadCharacters(projectiles);
+        gamePane.getChildren().remove(ship.getCharacterShape());
     }
 }
