@@ -18,7 +18,7 @@ public class GameView {
     public void setupGameView() {
         BorderPane gameView = new BorderPane();
         gameScene = new Scene(gameView);
-        GameMechanic game = new GameMechanic(gameScene,this);
+        GameMechanic game = new GameMechanic(gameScene);
         gameView.setPrefSize(gameScreenWidth,gameScreenHeight);
 
 
@@ -33,12 +33,14 @@ public class GameView {
 
     }
 
-    public int getGameScreenWidth(){
+    public static int getGameScreenWidth(){
         return gameScreenWidth;
     }
-    public int getGameScreenHeight(){
+    public static int getGameScreenHeight(){
         return gameScreenHeight;
     }
+
+
 
 
     public Scene getGameScene(){

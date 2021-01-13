@@ -6,11 +6,14 @@ import javafx.stage.Stage;
 public class AsteroidsApplication extends Application {
 
     public void start(Stage window) {
-        GameView gameView = new GameView(640, 480);
-        gameView.setupGameView();
-
         window.setTitle("Asteroids!");
-        window.setScene(gameView.getGameScene());
+        MainMenuView mainView = new MainMenuView();
+        window.setScene(mainView.getView());
+        mainView.getStartButton().setOnAction(actionEvent -> {
+            GameView gameView = new GameView(mainView.getChosenWindowWidth(), mainView.getChosenWindowHeight());
+            gameView.setupGameView();
+            window.setScene(gameView.getGameScene());
+        });
         window.show();
     }
 

@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class GameMechanic {
-    private GameView gameSettings;
     private Pane gamePane;
     private Scene gameScene;
     private List<Character> asteroids;
@@ -17,12 +16,11 @@ public class GameMechanic {
     private Character ship;
     private PointsCounter pointsCounter;
 
-    public GameMechanic(Scene scene, GameView gameView) {
-        this.gameSettings = gameView;
+    public GameMechanic(Scene scene) {
         asteroids = new ArrayList<>();
         projectiles = new ArrayList<>();
         this.gamePane = new Pane();
-        gamePane.setPrefSize(gameSettings.getGameScreenWidth(), gameSettings.getGameScreenHeight());
+        gamePane.setPrefSize(GameView.getGameScreenWidth(), GameView.getGameScreenHeight());
         this.gameScene = scene;
     }
 
@@ -32,7 +30,7 @@ public class GameMechanic {
 
         spawnInitialAsteroids();
 
-        ship = new Ship(gameSettings.getGameScreenWidth() / 2, gameSettings.getGameScreenHeight() / 2);
+        ship = new Ship(GameView.getGameScreenWidth() / 2, GameView.getGameScreenHeight() / 2);
         asteroids.forEach(asteroid -> gamePane.getChildren().add(asteroid.getCharacterShape()));
         gamePane.getChildren().add(ship.getCharacterShape());
 
@@ -80,9 +78,9 @@ public class GameMechanic {
 
 
     public void spawnAdditionalAsteroid() {
-        if (Math.random() < 0.005) {
+        if (Math.random() < 0.005*MainMenuView.getChosenDifficultyLevel()) {
             Random rand = new Random();
-            Asteroid asteroid = new Asteroid(rand.nextInt(gameSettings.getGameScreenWidth()), rand.nextInt(gameSettings.getGameScreenHeight()));
+            Asteroid asteroid = new Asteroid(rand.nextInt(GameView.getGameScreenWidth()), rand.nextInt(GameView.getGameScreenHeight()));
             if (!asteroid.collide(ship)) {
                 asteroids.add(asteroid);
                 asteroid.setAlive(true);
@@ -95,7 +93,7 @@ public class GameMechanic {
         asteroids = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {
             Random rand = new Random();
-            Asteroid asteroid = new Asteroid(rand.nextInt(gameSettings.getGameScreenWidth()), rand.nextInt(gameSettings.getGameScreenHeight()));
+            Asteroid asteroid = new Asteroid(rand.nextInt(GameView.getGameScreenWidth()), rand.nextInt(GameView.getGameScreenHeight()));
             asteroids.add(asteroid);
             asteroid.setAlive(true);
         }

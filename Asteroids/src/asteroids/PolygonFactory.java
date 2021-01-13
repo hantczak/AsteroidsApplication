@@ -6,9 +6,6 @@ import java.util.Random;
 
 public class PolygonFactory {
 
-    private PolygonFactory(){
-    }
-
     public static Polygon createPolygon() {
         Random rnd = new Random();
 
