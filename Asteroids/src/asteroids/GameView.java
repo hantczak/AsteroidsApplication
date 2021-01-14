@@ -2,6 +2,7 @@ package asteroids;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 public class GameView {
@@ -16,21 +17,27 @@ public class GameView {
 
 
     public void setupGameView() {
+        Text pointsLabel = new Text(10, 20, "Points: 0");
+        Text livesLeftLabel = new Text(10,20,"Lives left: ");
+        PointsCounter pointsCounter = new PointsCounter(pointsLabel);
+
+        HBox topDisplay = new HBox();
         BorderPane gameView = new BorderPane();
         gameScene = new Scene(gameView);
-        GameMechanic game = new GameMechanic(gameScene);
+        GameMechanic game = new GameMechanic(gameScene,livesLeftLabel);
         gameView.setPrefSize(gameScreenWidth,gameScreenHeight);
 
 
 
-        Text pointsLabel = new Text(10, 20, "Points: 0");
-        Text livesLeftLabel = new Text(10,20,"Lives left: " + );
-        PointsCounter pointsCounter = new PointsCounter(pointsLabel);
+
 
         game.setupGameComponents(pointsCounter,4-MainMenuView.getChosenDifficultyLevel());
 
+        topDisplay.getChildren().addAll(pointsLabel,livesLeftLabel);
+        topDisplay.setSpacing(200);
         gameView.getChildren().add(game.getGamePane());
-        gameView.setTop(pointsLabel);
+        gameView.getChildren().add(topDisplay);
+
 
     }
 

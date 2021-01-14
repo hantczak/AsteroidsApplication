@@ -3,8 +3,10 @@ package asteroids;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -15,13 +17,15 @@ public class GameMechanic {
     private List<Character> projectiles;
     private Ship ship;
     private PointsCounter pointsCounter;
+    Text livesLeftLabel;
 
-    public GameMechanic(Scene scene) {
+    public GameMechanic(Scene scene, Text livesLeft) {
         asteroids = new ArrayList<>();
         projectiles = new ArrayList<>();
         this.gamePane = new Pane();
         gamePane.setPrefSize(GameView.getGameScreenWidth(), GameView.getGameScreenHeight());
         this.gameScene = scene;
+        this.livesLeftLabel = livesLeft;
     }
 
 
@@ -37,11 +41,10 @@ public class GameMechanic {
         KeyboardUserInputController controller = new KeyboardUserInputController(gameScene, ship);
         controller.readKeyboardInput();
         startGame(controller);
-
+        livesLeftLabel.setText("Lives left: " + ship.getLivesLeft());
     }
 
     public void startGame(KeyboardUserInputController controller) {
-        Timer timer = new Timer();
         new AnimationTimer() {
             public void handle(long now) {
                 controller.checkForInput();
@@ -61,6 +64,7 @@ public class GameMechanic {
                         int livesLeft = ship.getLivesLeft();
                         clearScreen();
                         restartGame(livesLeft);
+                        livesLeftLabel.setText("Lives left: " + ship.getLivesLeft());
                     }
                 }
 
