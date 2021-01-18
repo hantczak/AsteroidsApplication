@@ -58,7 +58,7 @@ public class GameMechanic {
                 if (checkForShipCollision()) {
                     if (!ship.isAlive()) {
                         stop();
-                        System.out.println("End!");
+                        showEndScreen();
                     } else if (ship.isAlive()) {
                         ship.decreaseLives();
                         int livesLeft = ship.getLivesLeft();
@@ -89,7 +89,7 @@ public class GameMechanic {
 
 
     public void spawnAdditionalAsteroid() {
-        if (Math.random() < 0.005 * MainMenuView.getChosenDifficultyLevel()*0.5) {
+        if (Math.random() < 0.005 * MainMenuView.getChosenDifficultyLevel() * 0.5) {
             Random rand = new Random();
             Asteroid asteroid = new Asteroid(rand.nextInt(GameView.getGameScreenWidth()), rand.nextInt(GameView.getGameScreenHeight()));
             if (!asteroid.collide(ship)) {
@@ -171,5 +171,11 @@ public class GameMechanic {
         deleteDeadCharacters(asteroids);
         deleteDeadCharacters(projectiles);
         gamePane.getChildren().remove(ship.getCharacterShape());
+    }
+
+    public void showEndScreen() {
+        clearScreen();
+        EndScreen endScreen = new EndScreen(pointsCounter, gamePane);
+        endScreen.create();
     }
 }

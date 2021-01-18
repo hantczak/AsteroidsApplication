@@ -18,4 +18,8 @@ public class PointsCounter {
     public void increasePoints(){
         text.setText("Points: " + points.addAndGet(1000*difficultyLevel));
     }
+
+    public int getPoints(){
+       return points.get();
+    }
 }
