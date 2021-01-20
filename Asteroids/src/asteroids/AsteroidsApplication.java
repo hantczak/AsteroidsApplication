@@ -1,4 +1,6 @@
 package asteroids;
+import asteroids.views.GameView;
+import asteroids.views.MainMenuView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

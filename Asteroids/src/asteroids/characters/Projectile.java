@@ -1,5 +1,6 @@
-package asteroids;
+package asteroids.characters;
 
+import asteroids.views.GameView;
 import javafx.scene.shape.Polygon;
 
 public class Projectile extends Character{
@@ -12,7 +13,7 @@ public class Projectile extends Character{
         super.getCharacterShape().setTranslateX(super.getCharacterShape().getTranslateX() + super.getMovement().getX());
         super.getCharacterShape().setTranslateY(super.getCharacterShape().getTranslateY() + super.getMovement().getY());
 
-        if(super.getCharacterShape().getTranslateX()>GameView.gameScreenWidth){
+        if(super.getCharacterShape().getTranslateX()> GameView.gameScreenWidth){
             setAlive(false);
         }
 

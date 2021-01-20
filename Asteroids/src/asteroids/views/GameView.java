@@ -1,5 +1,7 @@
-package asteroids;
+package asteroids.views;
 
+import asteroids.gameMechanic.GameMechanic;
+import asteroids.pointsManagement.PointsCounter;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -7,8 +9,8 @@ import javafx.scene.text.Text;
 
 public class GameView {
     private Scene gameScene;
-    static int gameScreenWidth;
-    static int gameScreenHeight;
+    public static int gameScreenWidth;
+    public static int gameScreenHeight;
 
     public GameView(int width, int height){
         gameScreenWidth = width;
@@ -28,17 +30,12 @@ public class GameView {
         gameView.setPrefSize(gameScreenWidth,gameScreenHeight);
 
 
-
-
-
         game.setupGameComponents(pointsCounter,4-MainMenuView.getChosenDifficultyLevel());
 
         topDisplay.getChildren().addAll(pointsLabel,livesLeftLabel);
         topDisplay.setSpacing(200);
         gameView.getChildren().add(game.getGamePane());
         gameView.getChildren().add(topDisplay);
-
-
     }
 
     public static int getGameScreenWidth(){

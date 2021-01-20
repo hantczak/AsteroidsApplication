@@ -1,4 +1,4 @@
-package asteroids;
+package asteroids.characters;
 
 import java.util.Random;
 

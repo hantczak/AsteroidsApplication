@@ -1,5 +1,6 @@
-package asteroids;
+package asteroids.characters;
 
+import asteroids.views.GameView;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;

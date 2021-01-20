@@ -1,4 +1,4 @@
-package asteroids;
+package asteroids.views;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

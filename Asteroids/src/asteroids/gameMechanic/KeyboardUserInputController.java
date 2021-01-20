@@ -1,5 +1,6 @@
-package asteroids;
+package asteroids.gameMechanic;
 
+import asteroids.characters.Character;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 

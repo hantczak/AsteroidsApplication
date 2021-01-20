@@ -1,5 +1,6 @@
-package asteroids;
+package asteroids.pointsManagement;
 
+import asteroids.views.MainMenuView;
 import javafx.scene.text.Text;
 
 import java.util.concurrent.atomic.AtomicInteger;

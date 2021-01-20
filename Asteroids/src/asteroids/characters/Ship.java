@@ -1,4 +1,4 @@
-package asteroids;
+package asteroids.characters;
 
 
 import javafx.scene.shape.Polygon;
