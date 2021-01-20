@@ -3,7 +3,7 @@ package asteroids.characters;
 import asteroids.views.GameView;
 import javafx.scene.shape.Polygon;
 
-public class Projectile extends Character{
+public class Projectile extends Character implements Movable{
     public Projectile(int x, int y){
         super(new Polygon(2, -2, 2, 2, -2, 2, -2, -2), x, y,1);
     }

@@ -5,7 +5,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
-public abstract class Character {
+public abstract class Character implements Movable{
 
     private Polygon characterShape;
     private Point2D movement;
@@ -75,7 +75,7 @@ public abstract class Character {
         this.movement = this.movement.add(changeX, changeY);
     }
 
-    public boolean collide(Character other) {
+    public boolean collide(Movable other) {
         Shape collisionArea = Shape.intersect(this.characterShape, other.getCharacterShape());
         return collisionArea.getBoundsInLocal().getWidth() > 0;
     }

@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class CharactersList {
-    private List<Character> asteroids;
-    private List<Character> projectiles;
+    private List<Movable> asteroids;
+    private List<Movable> projectiles;
     private Pane gamePane;
     private Ship ship;
     private PointsCounter pointsCounter;
@@ -73,7 +73,7 @@ public class CharactersList {
         }
     }
 
-    private void deleteDeadCharacters(List<Character> listOfCharacters) {
+    private void deleteDeadCharacters(List<Movable> listOfCharacters) {
         listOfCharacters.stream()
                 .filter(character -> !character.isAlive())
                 .forEach(character -> {
@@ -98,8 +98,8 @@ public class CharactersList {
 
     public void ensureCharactersMovement() {
         ship.move();
-        asteroids.forEach(Character::move);
-        projectiles.forEach(Character::move);
+        asteroids.forEach(Movable::move);
+        projectiles.forEach(Movable::move);
     }
 
     public void shoot() {

@@ -3,7 +3,7 @@ package asteroids.characters;
 
 import javafx.scene.shape.Polygon;
 
-public class Ship extends Character {
+public class Ship extends Character implements Movable{
 
     public Ship(int x, int y, int shipLives) {
         super(new Polygon(-5, -5, 10, 0, -5, 5), x, y, shipLives);
